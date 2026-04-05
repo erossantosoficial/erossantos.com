@@ -6,564 +6,480 @@
   <title>Eros Santos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;1,9..40,100;1,9..40,200&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;1,9..40,100&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:         #080808;
-      --surface:    #0f0f0f;
-      --surface2:   #161616;
-      --border:     rgba(255,255,255,0.06);
-      --border-hi:  rgba(255,255,255,0.15);
-      --white:      #eeebe4;
-      --white-dim:  rgba(238,235,228,0.42);
-      --white-low:  rgba(238,235,228,0.14);
-      --glass-bg:   rgba(255,255,255,0.04);
-      --glass-hi:   rgba(255,255,255,0.08);
-      --blur:       blur(24px) saturate(160%);
-      --nav-h:      64px;
+      --bg: #050505;
+      --s1: #090909;
+      --s2: #0e0e0e;
+      --green: #1e4d30;
+      --green-hi: #2d6e44;
+      --green-glow: rgba(26,70,40,0.13);
+      --green-line: rgba(40,110,60,0.28);
+      --border: rgba(255,255,255,0.055);
+      --border-hi: rgba(255,255,255,0.12);
+      --white: #f0ece4;
+      --dim: rgba(240,236,228,0.42);
+      --low: rgba(240,236,228,0.14);
+      --glass: rgba(255,255,255,0.03);
+      --blur: blur(28px) saturate(180%);
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 200;
-      overflow-x: hidden;
-      cursor: none;
+      background: var(--bg); color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-weight: 200;
+      overflow-x: hidden; cursor: none;
     }
-
-    /* grain overlay global */
     body::before {
-      content: '';
-      position: fixed; inset: 0;
-      z-index: 1000;
-      pointer-events: none;
-      opacity: 0.025;
+      content: ''; position: fixed; inset: 0; z-index: 900;
+      pointer-events: none; opacity: 0.03;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 256px;
+      background-size: 200px;
     }
 
-    /* ── CURSOR ── */
+    /* CURSOR */
     .cursor {
-      width: 5px; height: 5px;
-      background: var(--white);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
+      width: 5px; height: 5px; background: var(--white);
+      border-radius: 50%; position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
       transform: translate(-50%,-50%);
-      transition: width .2s ease, height .2s ease, background .2s, border .2s;
+      transition: width .2s, height .2s, border .2s;
       mix-blend-mode: difference;
     }
-    .cursor.expand {
-      width: 40px; height: 40px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.5);
-    }
+    .cursor.expand { width: 36px; height: 36px; background: transparent; border: 1px solid rgba(40,110,60,0.6); }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--nav-h);
+      position: fixed; top: 0; left: 0; right: 0; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-      z-index: 500;
-      transition: background .6s, border-color .6s;
+      padding: 0 52px; z-index: 500; transition: background .5s;
     }
     nav.scrolled {
-      background: var(--glass-bg);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
+      background: rgba(5,5,5,0.82);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 100;
-      font-size: 0.78rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
+      font-weight: 100; font-size: 0.7rem; letter-spacing: 0.52em;
+      text-transform: uppercase; color: var(--white); text-decoration: none;
     }
-
-    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
-      font-weight: 200;
-      font-size: 0.68rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      text-decoration: none;
-      transition: color .3s;
-      position: relative;
+      font-weight: 200; font-size: 0.6rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--dim); text-decoration: none;
+      transition: color .3s; position: relative;
     }
     .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--white);
-      transition: width .35s;
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--green-hi); transition: width .35s;
     }
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* ── HERO ── */
+    /* ══ HERO ══ */
     #hero {
-      position: relative;
-      height: 100vh;
+      position: relative; height: 100vh;
       display: flex; align-items: flex-end;
-      padding: 0 56px 80px;
-      overflow: hidden;
+      padding: 0 56px 120px; overflow: hidden;
     }
-
     .hero-bg {
-      position: absolute; inset: 0;
-      background: #101010;
+      position: absolute; inset: 0; background: #080808;
       /* SUBSTITUA: background: url('hero.jpg') center/cover no-repeat; */
     }
     .hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background:
-        linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.3) 55%, transparent 100%),
-        linear-gradient(to right, rgba(8,8,8,0.4) 0%, transparent 60%);
+        linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0.65) 32%, rgba(5,5,5,0.0) 100%),
+        linear-gradient(to right, rgba(5,5,5,0.7) 0%, transparent 55%);
+    }
+    /* glass panel right */
+    .hero-glass {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 34%;
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.016);
+      border-left: 1px solid rgba(255,255,255,0.04);
+      pointer-events: none; z-index: 1;
+    }
+    .hero-glass::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.016) 79px, rgba(255,255,255,0.016) 80px),
+        repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.016) 79px, rgba(255,255,255,0.016) 80px);
+    }
+    /* green glow */
+    .hero-glow {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+      background: radial-gradient(ellipse 60% 100% at 20% 100%, var(--green-glow), transparent);
+      pointer-events: none; z-index: 1;
     }
 
-    .hero-content {
-      position: relative; z-index: 2;
-      max-width: 700px;
+    /* BIG TYPE BLEEDING BEHIND PHOTO */
+    .hero-backdrop-name {
+      position: absolute; bottom: -20px; left: -8px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400;
+      font-size: clamp(8rem, 22vw, 18rem);
+      line-height: 1; letter-spacing: -0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+      pointer-events: none; z-index: 1;
+      white-space: nowrap;
+      animation: fadeIn 1.2s .1s both;
     }
 
-    .hero-eyebrow {
-      font-weight: 200;
-      font-size: 0.65rem;
-      letter-spacing: 0.55em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      margin-bottom: 20px;
-      opacity: 0; transform: translateY(12px);
-      animation: up .7s .1s forwards;
+    .hero-content { position: relative; z-index: 2; max-width: 620px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 6px 14px 6px 9px;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--green-line); margin-bottom: 24px;
+      opacity: 0; transform: translateY(8px); animation: up .6s .05s forwards;
     }
+    .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green-hi); animation: blink 2s infinite; }
+    .badge-txt { font-weight: 200; font-size: 0.56rem; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(50,160,80,0.9); }
 
     .hero-name {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 100;
-      font-size: clamp(4.5rem, 11vw, 9rem);
-      line-height: 0.92;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      opacity: 0; transform: translateY(20px);
-      animation: up .9s .25s forwards;
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400;
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      line-height: 0.9; letter-spacing: -0.015em; color: var(--white);
+      opacity: 0; transform: translateY(22px); animation: up 1s .2s forwards;
     }
-    .hero-name .line2 {
+    .hero-name .last {
       display: block;
-      font-weight: 100;
-      font-style: italic;
-      color: var(--white-dim);
-      letter-spacing: 0.08em;
-      font-size: clamp(1.4rem, 3.5vw, 2.8rem);
-      text-transform: uppercase;
-      margin-top: 8px;
+      font-family: 'DM Sans', sans-serif; font-style: normal; font-weight: 100;
+      font-size: clamp(0.9rem, 2vw, 1.5rem);
+      letter-spacing: 0.65em; text-transform: uppercase; color: var(--dim);
+      margin-top: 12px;
     }
 
-    .hero-divider {
-      width: 40px; height: 1px;
-      background: var(--white-dim);
-      margin: 32px 0;
-      opacity: 0; animation: fadeIn .6s .7s forwards;
-    }
+    .hero-rule { width: 26px; height: 1px; background: var(--green-line); margin: 28px 0; opacity: 0; animation: fadeIn .5s .72s forwards; }
 
     .hero-tagline {
-      font-weight: 200;
-      font-size: 0.88rem;
-      letter-spacing: 0.1em;
-      line-height: 1.9;
-      color: var(--white-dim);
-      max-width: 360px;
-      opacity: 0; transform: translateY(12px);
-      animation: up .7s .8s forwards;
+      font-weight: 200; font-size: 0.82rem; letter-spacing: 0.07em; line-height: 2;
+      color: var(--dim); max-width: 300px;
+      opacity: 0; transform: translateY(8px); animation: up .7s .84s forwards;
       /* SUBSTITUA pelo texto real */
     }
 
     .hero-cta {
-      margin-top: 40px;
-      display: flex; gap: 20px; align-items: center;
-      opacity: 0; transform: translateY(12px);
-      animation: up .7s 1s forwards;
+      margin-top: 36px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(8px); animation: up .7s 1s forwards;
     }
-
-    .btn-glass {
-      display: inline-flex; align-items: center;
-      padding: 12px 32px;
-      background: var(--glass-bg);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      border: 1px solid var(--border-hi);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 200;
-      font-size: 0.65rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background .3s, border-color .3s;
+    .btn-solid {
+      padding: 12px 30px; background: var(--green); border: 1px solid var(--green-hi);
+      color: var(--white); font-weight: 300; font-size: 0.58rem;
+      letter-spacing: 0.4em; text-transform: uppercase; text-decoration: none;
+      transition: background .3s;
     }
-    .btn-glass:hover { background: var(--glass-hi); border-color: rgba(255,255,255,0.25); }
-
-    .btn-text {
-      font-weight: 200;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      text-decoration: none;
-      transition: color .3s;
+    .btn-solid:hover { background: var(--green-hi); }
+    .btn-outline {
+      padding: 12px 24px; background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border-hi); color: var(--white);
+      font-weight: 200; font-size: 0.58rem;
+      letter-spacing: 0.4em; text-transform: uppercase; text-decoration: none;
+      transition: border-color .3s;
     }
-    .btn-text:hover { color: var(--white); }
+    .btn-outline:hover { border-color: var(--green-line); }
 
-    /* scroll line */
+    /* streaming bar */
+    .stream-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 50px; z-index: 3;
+      display: flex; align-items: center; gap: 28px; padding: 0 56px;
+      background: rgba(5,5,5,0.7);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: fadeIn .8s 1.3s forwards;
+    }
+    .stream-lbl { font-weight: 100; font-size: 0.5rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--low); }
+    .stream-div { width: 1px; height: 14px; background: var(--border); }
+    .stream-link { font-weight: 200; font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--dim); text-decoration: none; transition: color .3s; }
+    .stream-link:hover { color: var(--white); }
+
+    /* scroll hint */
     .scroll-hint {
-      position: absolute; bottom: 32px; right: 48px;
-      display: flex; flex-direction: column; align-items: center; gap: 12px;
-      z-index: 2; opacity: 0; animation: fadeIn 1s 1.5s forwards;
+      position: absolute; bottom: 68px; right: 52px; z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0; animation: fadeIn 1s 1.6s forwards;
     }
-    .scroll-hint span {
-      font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase;
-      color: var(--white-low); writing-mode: vertical-rl;
-    }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--white-dim), transparent);
-      animation: pulse 2.5s infinite;
-    }
+    .scroll-hint span { font-size: 0.48rem; letter-spacing: 0.6em; text-transform: uppercase; color: var(--low); writing-mode: vertical-rl; }
+    .scroll-line { width: 1px; height: 44px; background: linear-gradient(to bottom, var(--green-line), transparent); animation: pulse 2.5s infinite; }
 
-    /* ── LAYOUT ── */
-    section { padding: 120px 0; }
+    /* ══ LAYOUT ══ */
+    section { position: relative; z-index: 1; padding: 110px 0; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 56px; }
+    .sec-label { font-weight: 100; font-size: 0.52rem; letter-spacing: 0.65em; text-transform: uppercase; color: rgba(40,140,65,0.6); margin-bottom: 10px; }
+    .sec-title {
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.0; color: var(--white);
+      margin-bottom: 48px;
+    }
+    .sec-title small {
+      display: block; font-family: 'DM Sans', sans-serif; font-style: normal; font-weight: 100;
+      font-size: 0.45em; letter-spacing: 0.52em; text-transform: uppercase; color: var(--dim); margin-bottom: 4px;
+    }
+    .sec-line { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--green-line), transparent); }
 
-    .label {
-      font-weight: 200;
-      font-size: 0.6rem;
-      letter-spacing: 0.55em;
-      text-transform: uppercase;
-      color: var(--white-low);
-      margin-bottom: 12px;
-    }
+    /* ══ LATEST RELEASE ══ */
+    #latest { background: var(--s1); }
+    .latest-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: center; }
 
-    .title {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 100;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      margin-bottom: 56px;
+    /* cover with type overlay */
+    .cover-wrap {
+      position: relative; aspect-ratio: 1/1;
+      background: var(--s2); border: 1px solid var(--border); overflow: hidden;
+      /* SUBSTITUA: background: url('cover.jpg') center/cover; */
     }
-    .title em {
-      font-style: italic;
-      font-weight: 100;
-      color: var(--white-dim);
+    .cover-wrap::before {
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.012) 49px, rgba(255,255,255,0.012) 50px),
+        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.012) 49px, rgba(255,255,255,0.012) 50px);
     }
+    /* title bleeds over cover */
+    .cover-bleed-text {
+      position: absolute; bottom: -12px; left: -6px; z-index: 2;
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: 5rem; line-height: 1; letter-spacing: -0.02em;
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+      white-space: nowrap; pointer-events: none;
+    }
+    .cover-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--low); font-size: 0.52rem; letter-spacing: 0.4em; text-transform: uppercase; }
 
-    /* ── ABOUT ── */
-    #about { background: var(--surface); }
+    .latest-type { font-weight: 100; font-size: 0.52rem; letter-spacing: 0.58em; text-transform: uppercase; color: rgba(40,140,65,0.75); margin-bottom: 10px; }
+    .latest-title {
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: clamp(1.8rem, 3.5vw, 3rem); line-height: 1.05; color: var(--white); margin-bottom: 6px;
+    }
+    .latest-date { font-weight: 100; font-size: 0.56rem; letter-spacing: 0.38em; color: var(--dim); margin-bottom: 28px; }
+    .latest-desc { font-weight: 200; font-size: 0.9rem; line-height: 1.95; color: var(--dim); margin-bottom: 32px; }
+    .latest-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 5fr 6fr;
-      gap: 80px;
-      align-items: center;
-    }
+    /* ══ ABOUT ══ */
+    #about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 80px; align-items: center; }
 
-    .about-img {
-      aspect-ratio: 2/3;
-      background: var(--surface2);
-      position: relative; overflow: hidden;
-      border: 1px solid var(--border);
-      /* SUBSTITUA: background: url('about.jpg') center/cover; */
+    .about-img-wrap {
+      position: relative; aspect-ratio: 2/3;
+      background: var(--s2); border: 1px solid var(--border); overflow: visible;
+      /* SUBSTITUA: adicione <img> dentro com object-fit:cover */
     }
-    .about-img::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(8,8,8,0.6));
+    /* DEPTH: name bleeds out of image */
+    .about-bleed {
+      position: absolute; bottom: -28px; right: -24px; z-index: 3;
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: 5.5rem; line-height: 1; letter-spacing: -0.02em;
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.07);
+      pointer-events: none; white-space: nowrap;
     }
-    .about-img-ph {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--white-low);
-      font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
+    /* frame border accent */
+    .about-img-wrap::after {
+      content: ''; position: absolute;
+      top: 12px; left: 12px; right: -12px; bottom: -12px;
+      border: 1px solid var(--green-line); z-index: -1;
     }
-
-    .about-body p {
-      font-weight: 200;
-      font-size: 0.95rem;
-      line-height: 2;
-      color: var(--white-dim);
-      margin-bottom: 20px;
+    .about-grid-overlay {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255,255,255,0.012) 49px, rgba(255,255,255,0.012) 50px),
+        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(255,255,255,0.012) 49px, rgba(255,255,255,0.012) 50px);
     }
+    .about-img-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--low); font-size: 0.52rem; letter-spacing: 0.45em; text-transform: uppercase; }
+    .about-tag { position: absolute; bottom: 16px; left: 16px; z-index: 2; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(40,120,60,0.38); }
+    .about-body p { font-weight: 200; font-size: 0.9rem; line-height: 2.05; color: var(--dim); margin-bottom: 18px; }
     .about-body p strong { color: var(--white); font-weight: 300; }
 
-    /* ── MUSIC ── */
+    /* ══ SHOWS ══ */
+    #shows { background: var(--s1); }
+    .shows-list { display: flex; flex-direction: column; }
+    .show {
+      display: grid; grid-template-columns: 90px 1fr auto;
+      align-items: center; gap: 36px;
+      padding: 22px 0; border-bottom: 1px solid var(--border);
+      transition: padding-left .3s;
+    }
+    .show:hover { padding-left: 10px; }
+    .show-date { display: flex; flex-direction: column; gap: 1px; }
+    .show-day { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; line-height: 1; color: var(--white); }
+    .show-mon { font-weight: 100; font-size: 0.52rem; letter-spacing: 0.42em; text-transform: uppercase; color: rgba(40,140,65,0.7); }
+    .show-info { display: flex; flex-direction: column; gap: 5px; }
+    .show-venue { font-weight: 300; font-size: 0.92rem; letter-spacing: 0.04em; }
+    .show-city { font-weight: 100; font-size: 0.56rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dim); }
+    .show-btn {
+      font-weight: 200; font-size: 0.54rem; letter-spacing: 0.42em; text-transform: uppercase;
+      color: rgba(40,140,65,0.8); text-decoration: none;
+      border: 1px solid var(--green-line); padding: 8px 18px;
+      transition: background .3s, color .3s;
+    }
+    .show-btn:hover { background: var(--green-glow); color: var(--white); }
+    .shows-empty { font-weight: 200; font-size: 0.82rem; color: var(--dim); padding: 32px 0; letter-spacing: 0.05em; }
+
+    /* ══ MUSIC ══ */
     #music { background: var(--bg); }
-
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 56px;
-      gap: 0;
-    }
-
+    .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 52px; }
     .tab-btn {
-      background: none; border: none;
-      padding: 12px 28px;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 200;
-      font-size: 0.62rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      cursor: none;
-      position: relative;
-      transition: color .3s;
+      background: none; border: none; padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif; font-weight: 200; font-size: 0.56rem;
+      letter-spacing: 0.44em; text-transform: uppercase; color: var(--dim); cursor: none;
+      position: relative; transition: color .3s;
     }
-    .tab-btn::after {
-      content: '';
-      position: absolute; bottom: -1px; left: 0;
-      width: 0; height: 1px;
-      background: var(--white);
-      transition: width .35s;
-    }
+    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 1px; background: var(--green-hi); transition: width .35s; }
     .tab-btn.active { color: var(--white); }
     .tab-btn.active::after { width: 100%; }
     .tab-btn:hover { color: var(--white); }
-
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* Videos */
-    .videos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
+    .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+    .vcard {
+      aspect-ratio: 16/9; background: var(--s1);
+      position: relative; overflow: hidden; border: 1px solid var(--border);
+      transition: border-color .3s, transform .4s;
     }
-    .video-card {
-      aspect-ratio: 16/9;
-      background: var(--surface);
-      position: relative; overflow: hidden;
-      border: 1px solid var(--border);
-      transition: border-color .3s;
+    .vcard:hover { border-color: var(--green-line); transform: scale(1.01); }
+    .vcard::before {
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.012) 39px, rgba(255,255,255,0.012) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.012) 39px, rgba(255,255,255,0.012) 40px);
     }
-    .video-card:hover { border-color: var(--border-hi); }
-    .video-ph {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--white-low);
-      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
-    }
+    .vcard-ph { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; color: var(--low); font-size: 0.52rem; letter-spacing: 0.4em; text-transform: uppercase; }
 
-    /* Releases */
     .releases { display: flex; flex-direction: column; }
-    .release {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      transition: padding-left .3s;
-    }
-    .release:hover { padding-left: 8px; }
-    .release-info { display: flex; flex-direction: column; gap: 6px; }
-    .release-name {
-      font-weight: 300;
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-    }
-    .release-sub {
-      font-weight: 200;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-    }
-    .release-a {
-      font-weight: 200;
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-      text-decoration: none;
-      transition: color .3s;
-    }
-    .release-a:hover { color: var(--white); }
+    .release { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--border); transition: padding-left .3s; }
+    .release:hover { padding-left: 10px; }
+    .rel-info { display: flex; flex-direction: column; gap: 5px; }
+    .rel-name { font-weight: 300; font-size: 0.92rem; letter-spacing: 0.04em; }
+    .rel-sub { font-weight: 100; font-size: 0.54rem; letter-spacing: 0.36em; text-transform: uppercase; color: var(--dim); }
+    .rel-a { font-weight: 200; font-size: 0.54rem; letter-spacing: 0.42em; text-transform: uppercase; color: rgba(40,140,65,0.75); text-decoration: none; transition: color .3s; }
+    .rel-a:hover { color: var(--green-hi); }
 
-    /* Social */
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
+    .sgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+    .scard {
+      display: flex; align-items: center; gap: 14px; padding: 20px 16px;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border); text-decoration: none; color: var(--white);
+      position: relative; overflow: hidden; transition: border-color .3s, background .3s;
     }
-    .social-card {
-      display: flex; align-items: center; gap: 16px;
-      padding: 20px 18px;
-      background: var(--glass-bg);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      border: 1px solid var(--border);
-      text-decoration: none; color: var(--white);
-      transition: background .3s, border-color .3s;
+    .scard::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 9px, rgba(255,255,255,0.01) 9px, rgba(255,255,255,0.01) 10px),
+        repeating-linear-gradient(90deg, transparent, transparent 9px, rgba(255,255,255,0.01) 9px, rgba(255,255,255,0.01) 10px);
     }
-    .social-card:hover { background: var(--glass-hi); border-color: var(--border-hi); }
-    .social-icon { font-size: 1.1rem; opacity: 0.5; }
-    .social-name { font-weight: 300; font-size: 0.88rem; }
-    .social-sub {
-      font-weight: 200; font-size: 0.6rem;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--white-dim); margin-top: 2px;
-    }
+    .scard:hover { border-color: var(--green-line); background: var(--green-glow); }
+    .scard-icon { font-size: 1.1rem; opacity: 0.45; position: relative; z-index: 1; }
+    .scard-name { font-weight: 300; font-size: 0.84rem; position: relative; z-index: 1; }
+    .scard-sub { font-weight: 100; font-size: 0.54rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--dim); margin-top: 2px; position: relative; z-index: 1; }
 
-    /* ── CONTACT ── */
-    #contact { background: var(--surface); }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+    /* ══ PRESS ══ */
+    #press { background: var(--s1); }
+    .press-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); }
+    .press-card {
+      background: var(--s1); padding: 36px 32px;
+      position: relative; overflow: hidden;
+      transition: background .3s;
     }
-
-    .contact-left p {
-      font-weight: 200;
-      font-size: 0.92rem;
-      line-height: 2;
-      color: var(--white-dim);
-      margin-bottom: 32px;
+    .press-card:hover { background: var(--s2); }
+    .press-quote {
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: 1rem; line-height: 1.8; color: var(--white);
+      margin-bottom: 24px;
     }
+    /* quote mark decorativo */
+    .press-card::before {
+      content: '\201C';
+      position: absolute; top: 16px; left: 24px;
+      font-family: 'Playfair Display', serif; font-size: 5rem; line-height: 1;
+      color: rgba(40,110,60,0.08); pointer-events: none;
+    }
+    .press-source { font-weight: 100; font-size: 0.54rem; letter-spacing: 0.44em; text-transform: uppercase; color: rgba(40,140,65,0.65); }
 
+    /* ══ CONTACT ══ */
+    #contact { background: var(--bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-left p { font-weight: 200; font-size: 0.88rem; line-height: 2.05; color: var(--dim); margin-bottom: 28px; }
     .contact-mail {
-      display: inline-block;
-      font-weight: 100;
-      font-size: 1rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-hi);
-      padding-bottom: 4px;
+      display: inline-block; font-weight: 100; font-size: 0.88rem; letter-spacing: 0.06em;
+      color: var(--white); text-decoration: none;
+      border-bottom: 1px solid var(--green-line); padding-bottom: 3px;
       transition: border-color .3s;
     }
-    .contact-mail:hover { border-color: var(--white); }
-
+    .contact-mail:hover { border-color: var(--green-hi); }
     .form { display: flex; flex-direction: column; gap: 14px; }
     .form-row { display: flex; flex-direction: column; gap: 7px; }
-    .form-lbl {
-      font-weight: 200;
-      font-size: 0.58rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--white-low);
-    }
+    .form-lbl { font-weight: 100; font-size: 0.52rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--low); }
     .form-inp, .form-ta {
-      background: var(--glass-bg);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      border: 1px solid var(--border);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 200;
-      font-size: 0.88rem;
-      padding: 12px 14px;
-      outline: none;
-      transition: border-color .3s;
-      resize: none;
+      background: var(--glass);
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--border); color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-weight: 200; font-size: 0.88rem;
+      padding: 12px 14px; outline: none; transition: border-color .3s; resize: none;
     }
-    .form-inp:focus, .form-ta:focus { border-color: var(--border-hi); }
-    .form-inp::placeholder, .form-ta::placeholder { color: var(--white-low); }
+    .form-inp:focus, .form-ta:focus { border-color: var(--green-line); }
+    .form-inp::placeholder, .form-ta::placeholder { color: var(--low); }
     .form-ta { min-height: 120px; }
-
     .btn-send {
-      align-self: flex-start;
-      padding: 12px 40px;
-      background: var(--glass-bg);
-      backdrop-filter: var(--blur);
-      -webkit-backdrop-filter: var(--blur);
-      border: 1px solid var(--border-hi);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 200;
-      font-size: 0.62rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      cursor: none;
-      transition: background .3s, border-color .3s;
+      align-self: flex-start; padding: 12px 36px;
+      background: var(--green); border: 1px solid var(--green-hi);
+      color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-weight: 300; font-size: 0.56rem; letter-spacing: 0.44em; text-transform: uppercase;
+      cursor: none; transition: background .3s;
     }
-    .btn-send:hover { background: var(--glass-hi); border-color: rgba(255,255,255,0.28); }
+    .btn-send:hover { background: var(--green-hi); }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer {
-      padding: 32px 56px;
+      position: relative; z-index: 1; padding: 36px 56px;
       border-top: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
       background: var(--bg);
     }
-    .footer-name {
-      font-weight: 100;
-      font-size: 0.72rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--white-dim);
-    }
-    .footer-copy {
-      font-weight: 200;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--white-low);
-    }
+    .footer-name { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 1rem; letter-spacing: 0.04em; color: var(--dim); }
+    .footer-mid { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.62rem; letter-spacing: 0.2em; color: rgba(40,110,60,0.22); }
+    .footer-copy { font-weight: 100; font-size: 0.54rem; letter-spacing: 0.2em; color: var(--low); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes up {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* ANIMATIONS */
+    @keyframes up { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 0.15; }
-    }
+    @keyframes pulse { 0%,100% { opacity: .7; } 50% { opacity: .12; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .9s ease, transform .9s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: .08s; }
-    .d2 { transition-delay: .18s; }
-    .d3 { transition-delay: .28s; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .32s; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav, footer { padding-left: 24px; padding-right: 24px; }
-      .nav-links { gap: 20px; }
-      #hero { padding: 0 24px 64px; }
+      #hero { padding: 0 24px 100px; }
       .container { padding: 0 24px; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .about-img { aspect-ratio: 3/4; }
+      .latest-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-img-wrap::after { display: none; }
+      .about-bleed { display: none; }
+      .hero-glass { display: none; }
+      .hero-backdrop-name { font-size: 5rem; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
+      .show { grid-template-columns: 70px 1fr; }
+      .show-btn { display: none; }
     }
   </style>
 </head>
 <body>
-
   <div class="cursor" id="cursor"></div>
 
   <!-- NAV -->
   <nav id="nav">
     <a href="#hero" class="nav-logo">Eros Santos</a>
     <ul class="nav-links">
-      <li><a href="#about">Sobre</a></li>
+      <li><a href="#latest">Lançamento</a></li>
+      <li><a href="#shows">Shows</a></li>
       <li><a href="#music">Música</a></li>
+      <li><a href="#about">Sobre</a></li>
       <li><a href="#contact">Contato</a></li>
     </ul>
   </nav>
@@ -571,47 +487,103 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg"></div>
+    <div class="hero-glass"></div>
+    <div class="hero-glow"></div>
+    <!-- big type behind everything -->
+    <div class="hero-backdrop-name">Eros</div>
+
     <div class="hero-content">
-      <p class="hero-eyebrow">Cantor · Compositor</p> <!-- EDITE -->
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-txt">Novo Single Disponível</span> <!-- EDITE -->
+      </div>
       <h1 class="hero-name">
-        Eros Santos
-        <span class="line2">Uma nova voz do Brasil</span> <!-- SUBSTITUA -->
+        Eros
+        <span class="last">Santos</span>
       </h1>
-      <div class="hero-divider"></div>
+      <div class="hero-rule"></div>
       <p class="hero-tagline">
-        Frase marcante ou breve descrição do artista.
+        Uma frase marcante do artista. Breve, direta, autêntica.
         <!-- SUBSTITUA pelo texto real -->
       </p>
       <div class="hero-cta">
-        <a href="#music" class="btn-glass">Ouça Agora</a>
-        <a href="#about" class="btn-text">Conheça →</a>
+        <a href="#latest" class="btn-solid">Ouça Agora</a>
+        <a href="#about" class="btn-outline">Conheça o Artista</a>
       </div>
     </div>
+
+    <!-- streaming bar -->
+    <div class="stream-bar">
+      <span class="stream-lbl">Ouça em</span>
+      <div class="stream-div"></div>
+      <a href="#" class="stream-link">Spotify</a>      <!-- EDITE href -->
+      <div class="stream-div"></div>
+      <a href="#" class="stream-link">Apple Music</a>  <!-- EDITE href -->
+      <div class="stream-div"></div>
+      <a href="#" class="stream-link">YouTube Music</a><!-- EDITE href -->
+      <div class="stream-div"></div>
+      <a href="#" class="stream-link">Deezer</a>       <!-- EDITE href -->
+    </div>
+
     <div class="scroll-hint">
       <div class="scroll-line"></div>
       <span>Scroll</span>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
+  <!-- LATEST RELEASE -->
+  <section id="latest">
+    <div class="sec-line"></div>
     <div class="container">
-      <div class="about-grid">
-        <div class="about-img reveal">
-          <div class="about-img-ph">
-            <!-- SUBSTITUA: <img src="about.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"> -->
-            Foto
+      <div class="latest-grid">
+        <div class="cover-wrap reveal">
+          <div class="cover-ph">
+            <!-- SUBSTITUA: <img src="cover.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"> -->
+            Capa do Lançamento
+          </div>
+          <div class="cover-bleed-text">Novo</div> <!-- EDITE com nome do single -->
+        </div>
+        <div class="reveal d1">
+          <p class="latest-type">Novo Single · 2025</p>  <!-- EDITE -->
+          <h2 class="latest-title">Nome do Single</h2>    <!-- EDITE -->
+          <p class="latest-date">Lançado em DD de Mês de 2025</p> <!-- EDITE -->
+          <p class="latest-desc">
+            Breve descrição do lançamento — sobre o que fala a música, o mood, a produção.
+            <!-- SUBSTITUA pelo texto real -->
+          </p>
+          <div class="latest-btns">
+            <a href="#" class="btn-solid">Ouvir no Spotify</a>   <!-- EDITE href -->
+            <a href="#" class="btn-outline">Ver Clipe</a>         <!-- EDITE href -->
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-line"></div>
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap reveal">
+          <div class="about-grid-overlay"></div>
+          <div class="about-img-ph">
+            <!-- SUBSTITUA: <img src="about.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"> -->
+            Foto do Artista
+          </div>
+          <span class="about-tag">Brasil · Mar · Canção</span>
+          <!-- type bleeds out of photo -->
+          <div class="about-bleed">Santos</div>
+        </div>
         <div class="about-body">
-          <p class="label reveal">Sobre o Artista</p>
-          <h2 class="title reveal d1">Uma voz <em>singular</em></h2>
+          <p class="sec-label reveal">Sobre o Artista</p>
+          <h2 class="sec-title reveal d1"><small>Uma voz do</small>Brasil</h2>
           <p class="reveal d2">
-            Primeiro parágrafo da biografia. Fale sobre origem, trajetória e o que define o artista.
+            Primeiro parágrafo da biografia. Fale sobre origem, trajetória, o que define o artista.
             <!-- SUBSTITUA -->
           </p>
           <p class="reveal d3">
-            Segundo parágrafo. Influências, estilo musical, conquistas ou projetos relevantes.
+            Segundo parágrafo. Influências, estilo musical, conquistas, projetos.
             <!-- SUBSTITUA -->
           </p>
         </div>
@@ -619,77 +591,120 @@
     </div>
   </section>
 
-  <!-- MUSIC -->
-  <section id="music">
+  <!-- SHOWS -->
+  <section id="shows">
+    <div class="sec-line"></div>
     <div class="container">
-      <p class="label reveal">Discografia</p>
-      <h2 class="title reveal d1">Música <em>&</em> Vídeos</h2>
+      <p class="sec-label reveal">Agenda</p>
+      <h2 class="sec-title reveal d1"><small>Próximos</small>Shows</h2>
+      <div class="shows-list reveal d2">
+        <!-- DUPLIQUE .show para cada data -->
+        <div class="show">
+          <div class="show-date">
+            <span class="show-day">15</span>   <!-- EDITE dia -->
+            <span class="show-mon">Jun</span>   <!-- EDITE mês -->
+          </div>
+          <div class="show-info">
+            <span class="show-venue">Nome do Venue</span>   <!-- EDITE -->
+            <span class="show-city">São Paulo, SP</span>    <!-- EDITE -->
+          </div>
+          <a href="#" class="show-btn">Ingressos</a>        <!-- EDITE href -->
+        </div>
+        <div class="show">
+          <div class="show-date">
+            <span class="show-day">22</span>
+            <span class="show-mon">Jun</span>
+          </div>
+          <div class="show-info">
+            <span class="show-venue">Nome do Venue 2</span>
+            <span class="show-city">Rio de Janeiro, RJ</span>
+          </div>
+          <a href="#" class="show-btn">Ingressos</a>
+        </div>
+        <div class="show">
+          <div class="show-date">
+            <span class="show-day">05</span>
+            <span class="show-mon">Jul</span>
+          </div>
+          <div class="show-info">
+            <span class="show-venue">Nome do Festival</span>
+            <span class="show-city">Florianópolis, SC</span>
+          </div>
+          <a href="#" class="show-btn">Ingressos</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- MUSIC & VIDEOS -->
+  <section id="music">
+    <div class="sec-line"></div>
+    <div class="container">
+      <p class="sec-label reveal">Discografia</p>
+      <h2 class="sec-title reveal d1"><small>Música &</small>Vídeos</h2>
       <div class="tabs reveal d2">
         <button class="tab-btn active" onclick="switchTab(event,'videos')">Vídeos</button>
         <button class="tab-btn" onclick="switchTab(event,'musica')">Música</button>
         <button class="tab-btn" onclick="switchTab(event,'siga')">Siga</button>
       </div>
 
-      <!-- VÍDEOS -->
       <div class="tab-panel active" id="tab-videos">
-        <div class="videos-grid">
-          <div class="video-card">
-            <div class="video-ph">Vídeo 1</div>
-            <!-- SUBSTITUA: <iframe src="https://www.youtube.com/embed/ID" style="position:absolute;inset:0;width:100%;height:100%" frameborder="0" allowfullscreen></iframe> -->
+        <div class="vgrid">
+          <div class="vcard"><div class="vcard-ph">Vídeo 1</div>
+            <!-- SUBSTITUA: <iframe src="https://www.youtube.com/embed/ID" style="position:absolute;inset:0;width:100%;height:100%;z-index:3" frameborder="0" allowfullscreen></iframe> -->
           </div>
-          <div class="video-card"><div class="video-ph">Vídeo 2</div></div>
-          <div class="video-card"><div class="video-ph">Vídeo 3</div></div>
+          <div class="vcard"><div class="vcard-ph">Vídeo 2</div></div>
+          <div class="vcard"><div class="vcard-ph">Vídeo 3</div></div>
         </div>
       </div>
 
-      <!-- MÚSICA -->
       <div class="tab-panel" id="tab-musica">
         <div class="releases">
-          <!-- DUPLIQUE para cada lançamento -->
           <div class="release">
-            <div class="release-info">
-              <span class="release-name">Nome da Música</span> <!-- EDITE -->
-              <span class="release-sub">Single · 2024</span>   <!-- EDITE -->
-            </div>
-            <a href="#" class="release-a">Ouvir →</a>          <!-- EDITE href -->
+            <div class="rel-info"><span class="rel-name">Nome da Música</span><span class="rel-sub">Single · 2025</span></div>
+            <a href="#" class="rel-a">Ouvir →</a>
           </div>
           <div class="release">
-            <div class="release-info">
-              <span class="release-name">Nome da Música 2</span>
-              <span class="release-sub">Single · 2024</span>
-            </div>
-            <a href="#" class="release-a">Ouvir →</a>
+            <div class="rel-info"><span class="rel-name">Nome da Música 2</span><span class="rel-sub">Single · 2024</span></div>
+            <a href="#" class="rel-a">Ouvir →</a>
           </div>
           <div class="release">
-            <div class="release-info">
-              <span class="release-name">Nome do EP</span>
-              <span class="release-sub">EP · 2023</span>
-            </div>
-            <a href="#" class="release-a">Ouvir →</a>
+            <div class="rel-info"><span class="rel-name">Nome do EP</span><span class="rel-sub">EP · 2024</span></div>
+            <a href="#" class="rel-a">Ouvir →</a>
           </div>
         </div>
       </div>
 
-      <!-- SIGA -->
       <div class="tab-panel" id="tab-siga">
-        <div class="social-grid">
-          <a href="#" class="social-card"> <!-- EDITE href -->
-            <span class="social-icon">🎵</span>
-            <div><div class="social-name">Spotify</div><div class="social-sub">Streaming</div></div>
-          </a>
-          <a href="#" class="social-card">
-            <span class="social-icon">▶</span>
-            <div><div class="social-name">YouTube</div><div class="social-sub">Vídeos</div></div>
-          </a>
-          <a href="#" class="social-card">
-            <span class="social-icon">📷</span>
-            <div><div class="social-name">@erossantos</div><div class="social-sub">Instagram</div></div> <!-- EDITE -->
-          </a>
-          <a href="#" class="social-card">
-            <span class="social-icon">♪</span>
-            <div><div class="social-name">@erossantos</div><div class="social-sub">TikTok</div></div> <!-- EDITE -->
-          </a>
+        <div class="sgrid">
+          <a href="#" class="scard"><span class="scard-icon">🎵</span><div><div class="scard-name">Spotify</div><div class="scard-sub">Streaming</div></div></a>
+          <a href="#" class="scard"><span class="scard-icon">▶</span><div><div class="scard-name">YouTube</div><div class="scard-sub">Vídeos</div></div></a>
+          <a href="#" class="scard"><span class="scard-icon">📷</span><div><div class="scard-name">@erossantos</div><div class="scard-sub">Instagram</div></div></a> <!-- EDITE -->
+          <a href="#" class="scard"><span class="scard-icon">♪</span><div><div class="scard-name">@erossantos</div><div class="scard-sub">TikTok</div></div></a> <!-- EDITE -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section id="press">
+    <div class="sec-line"></div>
+    <div class="container">
+      <p class="sec-label reveal">Imprensa</p>
+      <h2 class="sec-title reveal d1"><small>O que estão</small>Dizendo</h2>
+      <div class="press-grid reveal d2">
+        <!-- SUBSTITUA com citações reais -->
+        <div class="press-card">
+          <p class="press-quote">"Uma das vozes mais originais a surgir do Brasil nos últimos anos."</p>
+          <span class="press-source">Veículo · Ano</span>
+        </div>
+        <div class="press-card">
+          <p class="press-quote">"Sua música carrega o mar e a floresta ao mesmo tempo."</p>
+          <span class="press-source">Veículo · Ano</span>
+        </div>
+        <div class="press-card">
+          <p class="press-quote">"Eros Santos define uma nova geração da música brasileira."</p>
+          <span class="press-source">Veículo · Ano</span>
         </div>
       </div>
     </div>
@@ -697,33 +712,20 @@
 
   <!-- CONTACT -->
   <section id="contact">
+    <div class="sec-line"></div>
     <div class="container">
       <div class="contact-grid">
         <div class="contact-left">
-          <p class="label reveal">Contato</p>
-          <h2 class="title reveal d1">Fale <em>Conosco</em></h2>
-          <p class="reveal d2">
-            Para parcerias, assessoria de imprensa e informações comerciais, entre em contato pelo e-mail abaixo.
-            <!-- SUBSTITUA -->
-          </p>
-          <a href="mailto:contato@erossantos.com" class="contact-mail reveal d3">
-            contato@erossantos.com <!-- SUBSTITUA -->
-          </a>
+          <p class="sec-label reveal">Contato</p>
+          <h2 class="sec-title reveal d1"><small>Fale</small>Conosco</h2>
+          <p class="reveal d2">Para parcerias, assessoria de imprensa e informações comerciais, entre em contato pelo e-mail abaixo.<!-- SUBSTITUA --></p>
+          <a href="mailto:contato@erossantos.com" class="contact-mail reveal d3">contato@erossantos.com</a> <!-- SUBSTITUA -->
         </div>
         <div class="reveal d2">
           <form class="form" onsubmit="handleForm(event)">
-            <div class="form-row">
-              <label class="form-lbl">Nome</label>
-              <input type="text" class="form-inp" placeholder="Seu nome" />
-            </div>
-            <div class="form-row">
-              <label class="form-lbl">E-mail</label>
-              <input type="email" class="form-inp" placeholder="seu@email.com" />
-            </div>
-            <div class="form-row">
-              <label class="form-lbl">Mensagem</label>
-              <textarea class="form-ta" placeholder="Escreva sua mensagem..."></textarea>
-            </div>
+            <div class="form-row"><label class="form-lbl">Nome</label><input type="text" class="form-inp" placeholder="Seu nome" /></div>
+            <div class="form-row"><label class="form-lbl">E-mail</label><input type="email" class="form-inp" placeholder="seu@email.com" /></div>
+            <div class="form-row"><label class="form-lbl">Mensagem</label><textarea class="form-ta" placeholder="Escreva sua mensagem..."></textarea></div>
             <button type="submit" class="btn-send">Enviar</button>
           </form>
         </div>
@@ -734,11 +736,11 @@
   <!-- FOOTER -->
   <footer>
     <span class="footer-name">Eros Santos</span>
-    <span class="footer-copy">© 2025 Eros Santos. Todos os direitos reservados.</span> <!-- EDITE ano -->
+    <span class="footer-mid">Brasil · Mar · Canção</span>
+    <span class="footer-copy">© 2025 Eros Santos. Todos os direitos reservados.</span>
   </footer>
 
   <script>
-    // Cursor
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -749,11 +751,9 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
     });
 
-    // Nav
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 
-    // Tabs
     function switchTab(e, id) {
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -761,17 +761,12 @@
       e.currentTarget.classList.add('active');
     }
 
-    // Reveal
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Form
-    function handleForm(e) {
-      e.preventDefault();
-      alert('Mensagem enviada!'); // SUBSTITUA por Formspree ou similar
-    }
+    function handleForm(e) { e.preventDefault(); alert('Mensagem enviada!'); }
   </script>
 </body>
 </html>
